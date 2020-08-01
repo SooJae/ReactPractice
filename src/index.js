@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+
+// App.js를 #root 가 존재하는 태그에 삽입하겠다.
 ReactDOM.render(
   <React.StrictMode>
     <App />
