@@ -1,13 +1,10 @@
 import React from 'react';
-import Hello from "./Hello";
+import './App.css';
+import InputSample from "./InputSample";
 
 function App() {
   return (
-    <div >
-      <Hello />
-      <Hello />
-      <Hello />
-    </div>
+    <InputSample/>
   );
 }
 
