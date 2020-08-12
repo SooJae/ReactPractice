@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import { MdDone, MdDelete } from "react-icon/md";
+import { MdDone, MdDelete } from "react-icons/md";
 
 const Remove = styled.div`
   opacity: 0;
