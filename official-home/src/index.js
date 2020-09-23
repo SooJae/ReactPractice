@@ -1,42 +1,47 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const Square = ({value, handleClick}) => {
+const Square = ({ value, onHandleClick }) => {
   console.log(value);
-  console.log(handleClick);
+  console.log(onHandleClick);
   return (
-    <button className="square" onClick={() => handleClick('X')}>
+    <button className="square" onClick={() => onHandleClick('X')}>
       {value}
     </button>
   );
 };
 
-
 const Board = () => {
   const initialState = {
     squares: Array(9).fill(null),
-    xIsNext: true,
-  }
-
+    xIsNext: true
+  };
   const [state, setState] = useState(initialState);
-  // const changeState =  (squares, )=> {
-  //   return {squares: squares}
-  // };
 
-  const handleClick = (i) => {
+  const handleClick = i => {
     const squares = state.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
     squares[i] = state.xIsNext ? 'X' : 'O';
-    setState(
-      {squares, xIsNext: !state.xIsNext}
-      );
-  }
+    setState({ squares, xIsNext: !state.xIsNext });
+  };
 
-  const renderSquare = (index) => {
-    return <Square value={state.squares[index]} handleClick={()=>handleClick(index)}/>
-  }
+  const renderSquare = index => (
+    <Square
+      value={state.squares[index]}
+      onHandleClick={() => handleClick(index)}
+    />
+  );
 
-  const status = `Next player: ${state.xIsNext ? 'X' : 'O'}`;
+  const winner = calculateWinner(state.squares);
+  let status;
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else {
+    status = 'Next player: ' + (state.xIsNext ? 'X' : 'O');
+  }
 
   return (
     <div>
@@ -57,15 +62,14 @@ const Board = () => {
         {renderSquare(8)}
       </div>
     </div>
-  )
-}
-
+  );
+};
 
 const Game = () => {
   return (
     <div className="game">
       <div className="game-board">
-        <Board/>
+        <Board />
       </div>
       <div className="game-info">
         <div>{/* status */}</div>
@@ -75,11 +79,26 @@ const Game = () => {
   );
 };
 
+const calculateWinner = squares => {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+};
 
 // ========================================
 
-ReactDOM.render(
-  <Game/>,
-  document.getElementById('root')
-);
-
+ReactDOM.render(<Game />, document.getElementById('root'));
