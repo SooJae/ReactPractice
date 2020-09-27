@@ -1,31 +1,43 @@
-const sleep = n => new Promise(resolve => setTimeout(resolve, n));
-
-// { id, title, body }
-
-const posts = [
-  {
-    id: 1,
-    title: '리덕스 미들웨어를 배워봅시다.',
-    body: '리덕스 미들웨어를 직접 만들어보면 이해하기가 쉽죠'
-  },
-  {
-    id: 2,
-    title: '22 리덕스 미들웨어를 배워봅시다.',
-    body: '22 리덕스 미들웨어를 직접 만들어보면 이해하기가 쉽죠'
-  },
-  {
-    id: 3,
-    title: '33 리덕스 미들웨어를 배워봅시다.',
-    body: '33 리덕스 미들웨어를 직접 만들어보면 이해하기가 쉽죠'
-  }
-];
+import axios from 'axios';
 
 export const getPosts = async () => {
-  await sleep(500);
-  return posts;
+  const response = await axios.get('http://localhost:4000/posts');
+  return response.data;
 };
 
-export const getPostById = async id => {
-  await sleep(500);
-  return posts.find(post => post.id === id);
+export const getPost = async id => {
+  const response = await axios.get(`http://localhost:4000/posts/${id}`);
+  return response.data;
 };
+
+// const sleep = n => new Promise(resolve => setTimeout(resolve, n));
+//
+// // { id, title, body }
+//
+// const posts = [
+//   {
+//     id: 1,
+//     title: '리덕스 미들웨어를 배워봅시다.',
+//     body: '리덕스 미들웨어를 직접 만들어보면 이해하기가 쉽죠'
+//   },
+//   {
+//     id: 2,
+//     title: '22 리덕스 미들웨어를 배워봅시다.',
+//     body: '22 리덕스 미들웨어를 직접 만들어보면 이해하기가 쉽죠'
+//   },
+//   {
+//     id: 3,
+//     title: '33 리덕스 미들웨어를 배워봅시다.',
+//     body: '33 리덕스 미들웨어를 직접 만들어보면 이해하기가 쉽죠'
+//   }
+// ];
+//
+// export const getPosts = async () => {
+//   await sleep(500);
+//   return posts;
+// };
+//
+// export const getPostById = async id => {
+//   await sleep(500);
+//   return posts.find(post => post.id === id);
+// };
